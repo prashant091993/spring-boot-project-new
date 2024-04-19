@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    driver-class-name: com.edb.Driver
+    username: aiimsbibinagar
+    url: jdbc:edb://10.10.10.235:5444/aiims_bibinagar
+    password: a11msb!b!n@g@r*$
+  application:
+    name: inv-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+#Eureka server url for registering   
+#This is eureka client
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      #defaultZone: http://172.18.0.2:8761/eureka/
+      # Used For Local Host
+      # defaultZone: http://discovery:8761/eureka/ 
+      #defaultZone:  http://10.10.10.235:8087/eureka/    
+      defaultZone: ${EUREKA_URL:http://10.10.10.235:8087/eureka/}  # Working Link Global
+      
+#register url to server    
+
+instance:
+   preferIpAddress: true
+   metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+
+
+server:
+  port: 8304
+  
+ 
